@@ -728,6 +728,7 @@ public void mergeConfig() {
 			while((line = br.readLine()) != null) {
 				welcomeMsg.add(line);
 			}
+			br.close();
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
