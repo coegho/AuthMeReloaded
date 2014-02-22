@@ -179,11 +179,11 @@ public class AdminCommand implements CommandExecutor {
                     sender.sendMessage("[AuthMe] The player : " + player.getNickname() + " is unlogged since " + msg);
                     sender.sendMessage("[AuthMe] LastPlayer IP : " + lastIP);
         		} else {
-            		sender.sendMessage("This player does not exist");
+            		m._(sender, "unknown_user");
             		return true;
         		}
         	} catch (NullPointerException e) {
-        		sender.sendMessage("This player does not exist");
+        		m._(sender, "unknown_user");                
         		return true;
         	}
         } else if (args[0].equalsIgnoreCase("accounts")) {
@@ -203,13 +203,13 @@ public class AdminCommand implements CommandExecutor {
     		        	try {
     		        		pAuth = database.getAuth(arguments[1].toLowerCase());
     		        	} catch (NullPointerException npe){
-    		        		fSender.sendMessage("[AuthMe] This player is unknown");
+    		        		fSender.sendMessage(m._("unknown_user"));
     		        		return;
     		        	}
     		        	if (pAuth != null) {
     		        		List<String> accountList = database.getAllAuthsByName(pAuth);
     		        		if (accountList.isEmpty() || accountList == null) {
-    		            		fSender.sendMessage("[AuthMe] This player is unknown");
+    		            		fSender.sendMessage(m._("unknown_user"));
     		            		return;
     		        		}
     		        		if (accountList.size() == 1) {
@@ -229,7 +229,7 @@ public class AdminCommand implements CommandExecutor {
     		            	fSender.sendMessage("[AuthMe] " + arguments[1] + " has " + String.valueOf(accountList.size()) + " accounts");
     		            	fSender.sendMessage(message);
     		        	} else {
-    		        		fSender.sendMessage("[AuthMe] This player is unknown");
+    		        		fSender.sendMessage(m._("unknown_user"));
     		        		return;
     		        	}
     				}
@@ -344,7 +344,7 @@ public class AdminCommand implements CommandExecutor {
     		String playername = args[1].toLowerCase();
     		PlayerAuth getAuth = database.getAuth(playername);
     		if (getAuth == null) {
-        		sender.sendMessage("This player does not exist");
+                m._(sender, "unknown_user");
         		return true;
     		}
     		sender.sendMessage("[AuthMe] " + args[1] + " email : " + getAuth.getEmail());
@@ -357,7 +357,7 @@ public class AdminCommand implements CommandExecutor {
     		String playername = args[1].toLowerCase();
     		PlayerAuth getAuth = database.getAuth(playername);
     		if (getAuth == null) {
-    			sender.sendMessage("This player does not exist");
+                m._(sender, "unknown_user");
     			return true;
     		}
     		getAuth.setEmail(args[2]);
