@@ -61,7 +61,7 @@ public class AsyncronousLogin {
             }
             if (plugin.captcha.containsKey(name) && plugin.captcha.get(name) >= Settings.maxLoginTry) {
                 plugin.cap.put(name, rdm.nextString());
-                for (String s : m._("need_captcha")) {
+                for (String s : m._("usage_captcha")) {
                 	player.sendMessage(s.replace("THE_CAPTCHA", plugin.cap.get(name)).replace("<theCaptcha>", plugin.cap.get(name)));
                 }
                 return true;
