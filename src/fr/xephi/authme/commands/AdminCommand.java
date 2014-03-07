@@ -179,11 +179,11 @@ public class AdminCommand implements CommandExecutor {
                     sender.sendMessage("[AuthMe] The player : " + player.getNickname() + " is unlogged since " + msg);
                     sender.sendMessage("[AuthMe] LastPlayer IP : " + lastIP);
         		} else {
-            		m._(sender, "unknown_user");
+            		m._(sender, "unknown_user"); 
             		return true;
         		}
         	} catch (NullPointerException e) {
-        		m._(sender, "unknown_user");                
+        		m._(sender, "unknown_user"); 
         		return true;
         	}
         } else if (args[0].equalsIgnoreCase("accounts")) {
@@ -203,13 +203,13 @@ public class AdminCommand implements CommandExecutor {
     		        	try {
     		        		pAuth = database.getAuth(arguments[1].toLowerCase());
     		        	} catch (NullPointerException npe){
-    		        		fSender.sendMessage(m._("unknown_user"));
+    		        		fSender.sendMessage("[AuthMe] This player is unknown");
     		        		return;
     		        	}
     		        	if (pAuth != null) {
     		        		List<String> accountList = database.getAllAuthsByName(pAuth);
     		        		if (accountList.isEmpty() || accountList == null) {
-    		            		fSender.sendMessage(m._("unknown_user"));
+    		            		fSender.sendMessage("[AuthMe] This player is unknown");
     		            		return;
     		        		}
     		        		if (accountList.size() == 1) {
@@ -229,7 +229,7 @@ public class AdminCommand implements CommandExecutor {
     		            	fSender.sendMessage("[AuthMe] " + arguments[1] + " has " + String.valueOf(accountList.size()) + " accounts");
     		            	fSender.sendMessage(message);
     		        	} else {
-    		        		fSender.sendMessage(m._("unknown_user"));
+    		        		fSender.sendMessage("[AuthMe] This player is unknown");
     		        		return;
     		        	}
     				}
@@ -344,7 +344,7 @@ public class AdminCommand implements CommandExecutor {
     		String playername = args[1].toLowerCase();
     		PlayerAuth getAuth = database.getAuth(playername);
     		if (getAuth == null) {
-                m._(sender, "unknown_user");
+        		m._(sender, "unknown_user"); 
         		return true;
     		}
     		sender.sendMessage("[AuthMe] " + args[1] + " email : " + getAuth.getEmail());
@@ -357,7 +357,7 @@ public class AdminCommand implements CommandExecutor {
     		String playername = args[1].toLowerCase();
     		PlayerAuth getAuth = database.getAuth(playername);
     		if (getAuth == null) {
-                m._(sender, "unknown_user");
+    			m._(sender, "unknown_user"); 
     			return true;
     		}
     		getAuth.setEmail(args[2]);
@@ -506,7 +506,7 @@ public class AdminCommand implements CommandExecutor {
             if (target != null) {
             	if (target.isOnline()) {
                     if (Settings.isTeleportToSpawnEnabled) {
-                    	Location spawn = plugin.getSpawnLocation(name, target.getWorld());
+                    	Location spawn = plugin.getSpawnLocation(target, target.getWorld());
                     	SpawnTeleportEvent tpEvent = new SpawnTeleportEvent(target, target.getLocation(), spawn, false);
                     	plugin.getServer().getPluginManager().callEvent(tpEvent);
                     	if(!tpEvent.isCancelled()) {
