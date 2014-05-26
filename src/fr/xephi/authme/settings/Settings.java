@@ -60,7 +60,7 @@ public final class Settings extends YamlConfiguration {
             disableSocialSpy, useMultiThreading, forceOnlyAfterLogin, useEssentialsMotd,
             usePurge, purgePlayerDat, purgeEssentialsFile, supportOldPassword, purgeLimitedCreative,
             purgeAntiXray, purgePermissions, enableProtection, enableAntiBot, recallEmail, useWelcomeMessage,
-            broadcastWelcomeMessage, forceRegKick, forceRegLogin, checkVeryGames;
+            broadcastWelcomeMessage, forceRegKick, forceRegLogin, checkVeryGames, delayJoinMessage;
  
     public static String getNickRegex, getUnloggedinGroup, getMySQLHost, getMySQLPort, 
             getMySQLUsername, getMySQLPassword, getMySQLDatabase, getMySQLTablename, 
@@ -244,6 +244,7 @@ public void loadConfigOptions() {
         getMaxLoginPerIp = configFile.getInt("settings.restrictions.maxLoginPerIp", 0);
         getMaxJoinPerIp = configFile.getInt("settings.restrictions.maxJoinPerIp", 0);
         checkVeryGames = configFile.getBoolean("VeryGames.enableIpCheck", false);
+        delayJoinMessage = configFile.getBoolean("settings.delayJoinMessage", false);
 
         // Load the welcome message
         getWelcomeMessage(plugin);
@@ -403,6 +404,7 @@ public static void reloadConfigOptions(YamlConfiguration newConfig) {
         getMaxLoginPerIp = configFile.getInt("settings.restrictions.maxLoginPerIp", 0);
         getMaxJoinPerIp = configFile.getInt("settings.restrictions.maxJoinPerIp", 0);
         checkVeryGames = configFile.getBoolean("VeryGames.enableIpCheck", false);
+        delayJoinMessage = configFile.getBoolean("settings.delayJoinMessage", false);
 
         // Reload the welcome message
         getWelcomeMessage(AuthMe.getInstance());
@@ -505,10 +507,14 @@ public static void reloadConfigOptions(YamlConfiguration newConfig) {
 	    }
 	    if(getString("settings.restrictions.allowedNicknameCharacters").equals("[a-zA-Z0-9_?]*"))
 	    	set("settings.restrictions.allowedNicknameCharacters", "[a-zA-Z0-9_]*");
+	    if(!contains("settings.delayJoinMessage")) {
+	    	set("settings.delayJoinMessage", false);
+	    	changes = true;
+	    }
 
 	    if (changes) {
-	        plugin.getLogger().warning("Merge new Config Options if needed..");
-	        plugin.getLogger().warning("Please check your config.yml file!");
+	        plugin.getLogger().warning("Merge new Config Options - I'm not an error, please don't report me");
+	        plugin.getLogger().warning("Please check your config.yml file for new configs!");
 	    }
 	    plugin.saveConfig();
 

@@ -580,7 +580,6 @@ public class AuthMePlayerListener implements Listener {
                 long cur = new Date().getTime();
              if((cur - lastLogin < timeout || timeout == 0) && !auth.getIp().equals("198.18.0.1") ) {
                      if (auth.getNickname().equalsIgnoreCase(name) && auth.getIp().equals(ip) ) {
-                     	plugin.getServer().getPluginManager().callEvent(new SessionEvent(auth, true));
                      	if(PlayerCache.getInstance().getAuth(name) != null) {
                      		PlayerCache.getInstance().updatePlayer(auth);
                      	} else {
@@ -590,6 +589,7 @@ public class AuthMePlayerListener implements Listener {
                      	m._(player, "valid_session");
                      	// Restore Permission Group
                         utils.setGroup(player, Utils.groupType.LOGGEDIN);
+                        plugin.getServer().getPluginManager().callEvent(new SessionEvent(auth, true));
                         return;
                      } else if (!Settings.sessionExpireOnIpChange){
                      	GameMode gM = gameMode.get(name);
@@ -711,7 +711,7 @@ public class AuthMePlayerListener implements Listener {
         	player.performCommand("motd");
         
         // Remove the join message while the player isn't logging in
-        if (Settings.enableProtection) {
+        if (Settings.enableProtection || Settings.delayJoinMessage) {
             joinMessage.put(name, event.getJoinMessage());
             event.setJoinMessage(null);
         }
@@ -746,12 +746,12 @@ public class AuthMePlayerListener implements Listener {
 
         if (PlayerCache.getInstance().isAuthenticated(name) && !player.isDead()) {
         	if(Settings.isSaveQuitLocationEnabled && data.isAuthAvailable(name)) {
-        		final PlayerAuth auth = new PlayerAuth(name,loc.getX(),loc.getY(),loc.getZ(),loc.getWorld().getName());
+        		final PlayerAuth auth = new PlayerAuth(name,loc.getX(),loc.getY(),loc.getZ(),loc.getWorld().getName(), player.getUniqueId());
         		try {
         			data.updateQuitLoc(auth);
         		} catch (NullPointerException npe) { }
         	}
-        	PlayerAuth auth = new PlayerAuth(name, ip, System.currentTimeMillis());
+        	PlayerAuth auth = new PlayerAuth(name, ip, System.currentTimeMillis(), player.getUniqueId());
         	data.updateSession(auth);
         }
 
@@ -817,12 +817,12 @@ public class AuthMePlayerListener implements Listener {
       String ip = plugin.getIP(player);
       if ((PlayerCache.getInstance().isAuthenticated(name)) && (!player.isDead())) {
     	  if ((Settings.isSaveQuitLocationEnabled)  && data.isAuthAvailable(name)){
-    		  final PlayerAuth auth = new PlayerAuth(name, loc.getX(), loc.getY(), loc.getZ(),loc.getWorld().getName());
+    		  final PlayerAuth auth = new PlayerAuth(name, loc.getX(), loc.getY(), loc.getZ(),loc.getWorld().getName(), player.getUniqueId());
     		  try {
     			  data.updateQuitLoc(auth);
     		  } catch (NullPointerException npe) { }
     	  }
-    	  PlayerAuth auth = new PlayerAuth(name, ip, System.currentTimeMillis());
+    	  PlayerAuth auth = new PlayerAuth(name, ip, System.currentTimeMillis(), player.getUniqueId());
     	  data.updateSession(auth);
       }
 
@@ -1107,7 +1107,7 @@ public class AuthMePlayerListener implements Listener {
         
         Location spawn = plugin.getSpawnLocation(player);
     	if(Settings.isSaveQuitLocationEnabled && data.isAuthAvailable(name)) {
-    		final PlayerAuth auth = new PlayerAuth(name,spawn.getX(),spawn.getY(),spawn.getZ(),spawn.getWorld().getName());
+    		final PlayerAuth auth = new PlayerAuth(name,spawn.getX(),spawn.getY(),spawn.getZ(),spawn.getWorld().getName(), player.getUniqueId());
     		try {
     			data.updateQuitLoc(auth);
     		} catch (NullPointerException npe) { }
