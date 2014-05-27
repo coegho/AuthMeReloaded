@@ -96,6 +96,7 @@ public class PasswordSecurity {
         case PLAINTEXT:
         case XENFORO:
         case SHA512:
+        case ROYALAUTH:
         case DOUBLEMD5:
         case WORDPRESS:
         case CUSTOM:
