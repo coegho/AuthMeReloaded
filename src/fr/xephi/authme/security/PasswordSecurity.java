@@ -80,6 +80,10 @@ public class PasswordSecurity {
         	salt = createSalt(40);
         	userSalt.put(playerName, salt);
         	break;
+        case WBB4:
+            salt = BCRYPT.gensalt(8);
+            userSalt.put(playerName, salt);
+            break;
         case PBKDF2:
         	salt = createSalt(12);
         	userSalt.put(playerName, salt);
