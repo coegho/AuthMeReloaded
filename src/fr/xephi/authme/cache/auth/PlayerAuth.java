@@ -1,7 +1,5 @@
 package fr.xephi.authme.cache.auth;
 
-import java.util.UUID;
-
 import fr.xephi.authme.security.HashAlgorithm;
 import fr.xephi.authme.settings.Settings;
 
