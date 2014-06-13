@@ -27,6 +27,7 @@ public enum HashAlgorithm {
     PBKDF2(fr.xephi.authme.security.crypts.CryptPBKDF2.class),
     WORDPRESS(fr.xephi.authme.security.crypts.WORDPRESS.class),
     ROYALAUTH(fr.xephi.authme.security.crypts.ROYALAUTH.class),
+    CRAZYCRYPT1(fr.xephi.authme.security.crypts.CRAZYCRYPT1.class),
     CUSTOM(Null.class);
     
     Class<?> classe;
