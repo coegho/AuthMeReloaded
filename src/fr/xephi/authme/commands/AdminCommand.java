@@ -487,7 +487,7 @@ public class AdminCommand implements CommandExecutor {
             Utils.getInstance().setGroup(name, groupType.UNREGISTERED);
             if (target != null) {
             	if (target.isOnline()) {
-                    if (Settings.isTeleportToSpawnEnabled) {
+                    if (Settings.isTeleportToSpawnEnabled && !Settings.noTeleport) {
                     	Location spawn = plugin.getSpawnLocation(target);
                     	SpawnTeleportEvent tpEvent = new SpawnTeleportEvent(target, target.getLocation(), spawn, false);
                     	plugin.getServer().getPluginManager().callEvent(tpEvent);

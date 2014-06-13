@@ -627,15 +627,16 @@ public class AuthMePlayerListener implements Listener {
             	Utils.forceGM(player);
             	this.causeByAuthMe = false;
             }
-            if (Settings.isTeleportToSpawnEnabled || (Settings.isForceSpawnLocOnJoinEnabled  && Settings.getForcedWorlds.contains(player.getWorld().getName()))) {
-                SpawnTeleportEvent tpEvent = new SpawnTeleportEvent(player, player.getLocation(), spawnLoc, PlayerCache.getInstance().isAuthenticated(name));
-                plugin.getServer().getPluginManager().callEvent(tpEvent);
-                if(!tpEvent.isCancelled()) {
-                	if (player != null && player.isOnline() && tpEvent.getTo() != null) {
-                  	  player.teleport(tpEvent.getTo());
-              	}
+            if (!Settings.noTeleport)
+                if (Settings.isTeleportToSpawnEnabled || (Settings.isForceSpawnLocOnJoinEnabled  && Settings.getForcedWorlds.contains(player.getWorld().getName()))) {
+                    SpawnTeleportEvent tpEvent = new SpawnTeleportEvent(player, player.getLocation(), spawnLoc, PlayerCache.getInstance().isAuthenticated(name));
+                    plugin.getServer().getPluginManager().callEvent(tpEvent);
+                    if(!tpEvent.isCancelled()) {
+                        if (player != null && player.isOnline() && tpEvent.getTo() != null) {
+                            player.teleport(tpEvent.getTo());
+                        }
+                    }
                 }
-            }
             placePlayerSafely(player, spawnLoc);
             LimboCache.getInstance().updateLimboPlayer(player);
             DataFileCache dataFile = new DataFileCache(LimboCache.getInstance().getLimboPlayer(name).getInventory(),LimboCache.getInstance().getLimboPlayer(name).getArmour());
@@ -649,15 +650,16 @@ public class AuthMePlayerListener implements Listener {
             if(!Settings.unRegisteredGroup.isEmpty()){
                utils.setGroup(player, Utils.groupType.UNREGISTERED);
             }
-            if (Settings.isTeleportToSpawnEnabled || (Settings.isForceSpawnLocOnJoinEnabled  && Settings.getForcedWorlds.contains(player.getWorld().getName()))) {
-                SpawnTeleportEvent tpEvent = new SpawnTeleportEvent(player, player.getLocation(), spawnLoc, PlayerCache.getInstance().isAuthenticated(name));
-                plugin.getServer().getPluginManager().callEvent(tpEvent);
-                if(!tpEvent.isCancelled()) {
-                	if (player != null && player.isOnline() && tpEvent.getTo() != null) {
-                    	  player.teleport(tpEvent.getTo());
-                	}
+            if (!Settings.noTeleport)
+                if (Settings.isTeleportToSpawnEnabled || (Settings.isForceSpawnLocOnJoinEnabled  && Settings.getForcedWorlds.contains(player.getWorld().getName()))) {
+                    SpawnTeleportEvent tpEvent = new SpawnTeleportEvent(player, player.getLocation(), spawnLoc, PlayerCache.getInstance().isAuthenticated(name));
+                    plugin.getServer().getPluginManager().callEvent(tpEvent);
+                    if(!tpEvent.isCancelled()) {
+                        if (player != null && player.isOnline() && tpEvent.getTo() != null) {
+                            player.teleport(tpEvent.getTo());
+                        }
+                    }
                 }
-            }
             if (!Settings.isForcedRegistrationEnabled) {
                 return;
             }
@@ -718,6 +720,7 @@ public class AuthMePlayerListener implements Listener {
     }
 
 	private void placePlayerSafely(Player player, Location spawnLoc) {
+	    if (!Settings.noTeleport) return;
 		if (Settings.isTeleportToSpawnEnabled || (Settings.isForceSpawnLocOnJoinEnabled  && Settings.getForcedWorlds.contains(player.getWorld().getName())))
 			return;
 		Block b = player.getLocation().getBlock();
@@ -843,6 +846,7 @@ public class AuthMePlayerListener implements Listener {
     			  ConsoleLogger.showError("Problem while restore " + name + " inventory after a kick");
     		  }
     	  }
+    	  if (!Settings.noTeleport)
     	  try {
     		  AuthMeTeleportEvent tpEvent = new AuthMeTeleportEvent(player, limbo.getLoc());
     		  plugin.getServer().getPluginManager().callEvent(tpEvent);
