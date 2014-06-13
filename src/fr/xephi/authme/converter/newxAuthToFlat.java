@@ -1,4 +1,4 @@
-package fr.xephi.authme.converter.xauth;
+package fr.xephi.authme.converter;
 
 import java.io.File;
 import java.sql.Connection;
@@ -10,27 +10,22 @@ import java.util.List;
 
 import org.bukkit.command.CommandSender;
 
-import com.cypherx.xauth.xAuth;
-import com.cypherx.xauth.database.Table;
-import com.cypherx.xauth.utils.xAuthLog;
+import de.luricos.bukkit.xAuth.xAuth;
+import de.luricos.bukkit.xAuth.database.Table;
+import de.luricos.bukkit.xAuth.utils.xAuthLog;
 
 import fr.xephi.authme.AuthMe;
 import fr.xephi.authme.api.API;
 import fr.xephi.authme.cache.auth.PlayerAuth;
 import fr.xephi.authme.datasource.DataSource;
 
-
-/**
-*
-* @author Xephi59
-*/
-public class oldxAuthToFlat extends Thread {
+public class newxAuthToFlat extends Thread {
 
 	public AuthMe instance;
 	public DataSource database;
 	public CommandSender sender;
 
-	public oldxAuthToFlat(AuthMe instance, DataSource database, CommandSender sender) {
+	public newxAuthToFlat(AuthMe instance, DataSource database, CommandSender sender) {
 		this.instance = instance;
 		this.database = database;
 		this.sender = sender;

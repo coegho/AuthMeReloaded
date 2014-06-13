@@ -1,9 +1,8 @@
-package fr.xephi.authme.converter.xauth;
+package fr.xephi.authme.converter;
 
 import org.bukkit.command.CommandSender;
 
 import fr.xephi.authme.AuthMe;
-import fr.xephi.authme.converter.Converter;
 import fr.xephi.authme.datasource.DataSource;
 
 public class xAuthConverter implements Converter {
