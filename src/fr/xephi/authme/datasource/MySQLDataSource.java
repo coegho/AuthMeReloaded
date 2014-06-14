@@ -435,6 +435,11 @@ public class MySQLDataSource implements DataSource {
                     blob.setBytes(1, bytes);
                     pst.setBlob(1, blob);
                     pst.setInt(2, id);
+                    pst.executeUpdate();
+                    pst = con.prepareStatement("UPDATE xf_user_authenticate SET scheme_class=? WHERE " + columnID + "=?;");
+                    pst.setString(1, "XenForo_Authentication_Core12");
+                    pst.setInt(2, id);
+                    pst.executeUpdate();
                 }
             }
         } catch (SQLException ex) {
