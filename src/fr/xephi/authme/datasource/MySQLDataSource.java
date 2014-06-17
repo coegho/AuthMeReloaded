@@ -209,6 +209,7 @@ public class MySQLDataSource implements DataSource {
                     rs.close();
                     pst = con.prepareStatement("SELECT * FROM xf_user_authenticate WHERE " + columnID + "=?;");
                     pst.setInt(1, id);
+                    rs = pst.executeQuery();
                     if (rs.next()) {
                         Blob blob = rs.getBlob("data");
                         byte[] bytes = blob.getBytes(1, (int) blob.length());
